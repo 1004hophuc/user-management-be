@@ -11,11 +11,11 @@ export class User extends AbstractEntity {
   @Column()
   password: string;
 
-  @Column({ enum: AccountRoles })
-  role: AccountRoles;
+  @Column({ enum: AccountRoles, default: '' })
+  role = '';
 
-  @Column()
-  refCode: string;
+  @Column({ default: '', type: 'string' })
+  refCode = '';
 
   @Column({ enum: StaffRoles })
   position: StaffRoles;

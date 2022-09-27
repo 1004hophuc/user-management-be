@@ -11,13 +11,26 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
     UsersModule,
-    PassportModule,
-    JwtModule.register({
-      secret: 'JWT_SECRET_KEY',
-      signOptions: { expiresIn: '60m' },
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.registerAsync({
+      imports: [],
+      useFactory: async () => {
+        return {
+          secret: process.env.WEBTOKEN_SECRET_KEY,
+          signOptions: {
+            ...(process.env.WEBTOKEN_EXPIRATION_TIME
+              ? {
+                  expiresIn: Number(process.env.WEBTOKEN_EXPIRATION_TIME),
+                }
+              : {}),
+          },
+        };
+      },
+      inject: [],
     }),
   ],
   providers: [AuthService, LocalStrategy, JsonWebTokenStrategy],
   controllers: [AuthController],
+  exports: [PassportModule.register({ defaultStrategy: 'jwt' })],
 })
 export class AuthModule {}

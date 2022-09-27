@@ -1,13 +1,24 @@
-import { IsBoolean, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsAlphanumeric,
+  IsBoolean,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { AccountRoles, StaffRoles } from 'src/common/enum';
+import { AccountRoles } from 'src/common/enum';
 
 export class CreateUserDto {
+  @ApiProperty({ required: true })
+  @IsAlphanumeric()
   @IsNotEmpty()
-  @IsString()
   userName: string;
 
+  @ApiProperty({ required: true })
   @IsNotEmpty()
+  @MinLength(8)
   @IsString()
   password: string;
 
@@ -15,13 +26,14 @@ export class CreateUserDto {
   @IsString()
   refCode: string;
 
+  @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsEnum(AccountRoles)
   role: AccountRoles;
 
-  @IsNotEmpty()
-  @IsEnum(StaffRoles)
-  position: StaffRoles;
+  // @IsNotEmpty()
+  // @IsEnum(StaffRoles)
+  // position: StaffRoles;
 
   @IsBoolean()
   @Type(() => Boolean)

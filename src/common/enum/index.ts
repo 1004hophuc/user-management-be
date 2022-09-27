@@ -1,14 +1,13 @@
-export enum StaffRoles {
+export enum AccountRoles {
+  SUPPER_ADMIN = 'admin-dev',
+  ADMIN = 'admin',
+  ADMIN_COMPANY = 'admin-company',
+  MODE = 'mode',
+  USER = 'user',
   MKT = 'marketing',
   ACCOUNTANT = 'accountant',
   HR = 'hr',
   STAFF = 'staff',
-}
-
-export enum AccountRoles {
-  ADMIN_DEV = 'admin-dev',
-  ADMIN_COMPANY = 'admin-company',
-  USER = 'user',
 }
 
 export const makeUid = (length: number) => {

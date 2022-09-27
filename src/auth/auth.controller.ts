@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 // import { ApiBearerAuth, ApiHeader, ApiHeaders } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
+import { AuthService, ITokenReturnBody } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { AuthenticationGuard } from './guards/auth.guard';
 import { LocalAuthGuard } from './guards/local.guard';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Authorization Module')
-@Controller('auth1')
+@Controller('auth')
 // @ApiHeader({
 //   name: 'Authorization',
 //   description: 'A Custom Header',
@@ -49,17 +49,24 @@ export class AuthController {
     status: 500,
     description: 'Internal server error',
   })
-  async login(@Body() loginDto: LoginDto): Promise<any> {
+  // async login(@Body() loginDto: LoginDto): Promise<any> {
+  //   return {
+  //     accessToken: (await this.authService.login(loginDto)).accessToken,
+  //   };
+  // }
+  @Post('login')
+  @ApiBody({ type: LoginDto })
+  @ApiResponse({ status: 201, description: 'Login Completed' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async login(@Body() payload: LoginDto): Promise<ITokenReturnBody> {
+    const user = await this.authService.authentication(payload);
+    delete user.password;
+
+    const token = await this.authService.createToken(user);
     return {
-      accessToken: (await this.authService.login(loginDto)).accessToken,
-      staff: {},
+      token,
+      user,
     };
   }
-
-  // @Get('/profile')
-  // @UseGuards(AuthenticationGuard)
-  // async getUserById(@Param() params) {
-  //   console.log('params:', params);
-  //   return 'ok';
-  // }
 }

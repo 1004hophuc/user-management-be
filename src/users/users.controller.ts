@@ -80,4 +80,19 @@ export class UsersController {
   async testRefCode(@Body() data): Promise<any> {
     return await this.userService.createRefCode(data);
   }
+
+  // @Post('/super-admin-register')
+  // async superAdminRegister(@Body() data: any) {
+  //   return await this.userService.createSuperAdminRegister(data);
+  // }
+
+  // @Post('/admin-register')
+  // async adminRegister(@Body() data: any) {
+  //   return await this.userService.createAdminRegister(data);
+  // }
+
+  // @Post('/admin-company-register')
+  // async adminCompanyRegister(@Body() data: any) {
+  //   return await this.userService.createAdminCompanyRegister(data);
+  // }
 }

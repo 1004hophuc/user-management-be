@@ -1,3 +1,5 @@
+import { RolesGuard } from './../auth/guards/roles.guard';
+import { AuthGuard } from '@nestjs/passport';
 import {
   Controller,
   Body,
@@ -6,10 +8,13 @@ import {
   Param,
   UseGuards,
   Request,
+  Req,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { ApiTags, ApiResponse, ApiOperation, ApiBody } from '@nestjs/swagger';
+import { Role } from 'src/auth/roles.decorator';
+import { AccountRoles } from 'src/common/enum';
 
 @ApiTags('Users Module')
 @Controller('users')
@@ -79,6 +84,13 @@ export class UsersController {
   })
   async testRefCode(@Body() data): Promise<any> {
     return await this.userService.createRefCode(data);
+  }
+
+  @Post()
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Role(AccountRoles.ADMIN_COMPANY)
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    return await this.userService.createUserRegister(createUserDto);
   }
 
   // @Post('/super-admin-register')

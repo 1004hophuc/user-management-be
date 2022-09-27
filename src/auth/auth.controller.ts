@@ -17,38 +17,38 @@ export class AuthController {
 
   // handle login
 
-  @UseGuards(LocalAuthGuard)
-  @Post('/user-login')
-  @ApiOperation({ summary: 'Authorization user login' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        userName: {
-          type: 'string',
-          example: 'hophuc1004',
-          description: 'This is user has been register',
-        },
-        password: {
-          type: 'string',
-          example: '123456abc',
-          description: 'This is password of user',
-        },
-      },
-    },
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Login Success',
-  })
-  @ApiResponse({
-    status: 403,
-    description: 'UnAuthorization',
-  })
-  @ApiResponse({
-    status: 500,
-    description: 'Internal server error',
-  })
+  // @UseGuards(LocalAuthGuard)
+  // @Post('/user-login')
+  // @ApiOperation({ summary: 'Authorization user login' })
+  // @ApiBody({
+  //   schema: {
+  //     type: 'object',
+  //     properties: {
+  //       userName: {
+  //         type: 'string',
+  //         example: 'hophuc1004',
+  //         description: 'This is user has been register',
+  //       },
+  //       password: {
+  //         type: 'string',
+  //         example: '123456abc',
+  //         description: 'This is password of user',
+  //       },
+  //     },
+  //   },
+  // })
+  // @ApiResponse({
+  //   status: 200,
+  //   description: 'Login Success',
+  // })
+  // @ApiResponse({
+  //   status: 403,
+  //   description: 'UnAuthorization',
+  // })
+  // @ApiResponse({
+  //   status: 500,
+  //   description: 'Internal server error',
+  // })
   // async login(@Body() loginDto: LoginDto): Promise<any> {
   //   return {
   //     accessToken: (await this.authService.login(loginDto)).accessToken,

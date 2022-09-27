@@ -24,16 +24,19 @@ export class UsersService {
     });
   }
 
-  async getByUsernameAndPass(
-    userName: string,
-    password: string,
-  ): Promise<User> {
-    return await this.usersRepository.findOne({
-      where: { userName, password },
-    });
-  }
+  // async getByUsernameAndPass(
+  //   userName: string,
+  //   password: string,
+  // ): Promise<User> {
+  //   return this.usersRepository.findOne({
+  //     where: {
+  //       userName,
+  //       password,
+  //     },
+  //   });
+  // }
 
-  async getUserByUsername(userName: string) {
+  async getByUsername(userName: string) {
     const staff = await this.usersRepository.findOne({
       where: { userName },
     });

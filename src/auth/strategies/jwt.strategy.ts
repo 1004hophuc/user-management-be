@@ -1,10 +1,13 @@
+import { UsersService } from './../../users/users.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy, JwtPayload } from 'passport-jwt';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Injectable()
 export class JsonWebTokenStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private readonly usersService: UsersService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,

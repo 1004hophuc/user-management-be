@@ -7,17 +7,8 @@ import { UsersService } from 'src/users/users.service';
 import { LoginDto } from './dto/login.dto';
 
 export interface IITokenReturnBody {
-  /**
-   * When the token is to expire in seconds
-   */
   expires: string;
-  /**
-   * A human-readable format of expires
-   */
   expiresPrettyPrint: string;
-  /**
-   * The Bearer token
-   */
   token: string;
 }
 
@@ -37,11 +28,6 @@ export class AuthService {
     this.expiration = process.env.WEBTOKEN_EXPIRATION_TIME;
   }
 
-  /**
-   * Creates a signed jwt token based on IProfile payload
-   * @param {Profile} param dto to generate token from
-   * @returns {Promise<ITokenReturnBody>} token body
-   */
   async createToken({
     username,
     name,
@@ -76,10 +62,8 @@ export class AuthService {
   }
 
   async authentication(payload: LoginDto): Promise<any> {
-    const user = await this.usersService.getByUsernameAndPass(
-      payload.userName,
-      payload.password,
-    );
+    const user = await this.usersService.getByUsername(payload.userName);
+    console.log('user: ', user);
 
     const check = await this.comparePassword(payload.password, user.password);
     console.log('check: ', check);

@@ -24,12 +24,12 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  refCode: string;
+  refCode: string = '';
 
   @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsEnum(AccountRoles)
-  role: AccountRoles;
+  role: AccountRoles = AccountRoles.STAFF;
 
   // @IsNotEmpty()
   // @IsEnum(StaffRoles)
@@ -37,5 +37,5 @@ export class CreateUserDto {
 
   @IsBoolean()
   @Type(() => Boolean)
-  isAccept: boolean;
+  isAccept: boolean = false;
 }

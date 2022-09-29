@@ -12,7 +12,7 @@ export class User extends AbstractEntity {
   password: string;
 
   @Column({ enum: AccountRoles, default: '' })
-  role = AccountRoles.USER;
+  role = AccountRoles.STAFF;
 
   @Column({ default: '', type: 'string' })
   refCode = '';

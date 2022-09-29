@@ -1,6 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { async } from 'rxjs';
 import { User } from 'src/users/users.entity';
 import { UsersService } from 'src/users/users.service';
 
@@ -60,6 +65,17 @@ export class AuthService {
     console.log(bcrypt);
     return await bcrypt.compare(password, storePasswordHash);
   }
+
+  // async validateUser(payload: LoginDto): Promise<User> {
+  //   const user = await this.usersService.getByUsernameAndPass(
+  //     payload.userName,
+  //     payload.password
+  //   )
+  //   if(!user) {
+  //     throw new UnauthorizedException('Could not authenticate. Please try again')
+  //   }
+  //   return user
+  // }
 
   async authentication(payload: LoginDto): Promise<any> {
     const user = await this.usersService.getByUsername(payload.userName);

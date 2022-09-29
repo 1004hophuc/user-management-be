@@ -1,3 +1,4 @@
+import { CreateUserDto } from './dto/create-user.dto';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AccountRoles, makeUid } from 'src/common/enum';
@@ -24,22 +25,24 @@ export class UsersService {
     });
   }
 
-  // async getByUsernameAndPass(
-  //   userName: string,
-  //   password: string,
-  // ): Promise<User> {
-  //   return this.usersRepository.findOne({
-  //     where: {
-  //       userName,
-  //       password,
-  //     },
-  //   });
-  // }
+  async getByUsernameAndPass(
+    userName: string,
+    password: string,
+  ): Promise<User> {
+    return this.usersRepository.findOne({
+      where: {
+        userName,
+        password,
+      },
+    });
+  }
 
   async getByUsername(userName: string) {
     const staff = await this.usersRepository.findOne({
       where: { userName },
     });
+
+    console.log('console.log.staff: ', staff);
 
     if (!staff) throw new BadRequestException('Username not found!');
 
@@ -51,7 +54,6 @@ export class UsersService {
       where: { userName: userName },
     });
 
-    console.log('data: ', data);
     const newUserName = userName.toLowerCase();
 
     // if (data) {
@@ -78,7 +80,7 @@ export class UsersService {
     return newRefCode;
   }
 
-  async createUserRegister({ userName, password }: any): Promise<User> {
+  async createUserRegister(userName: string, password: string): Promise<User> {
     const hashedPassword = await bcrypt.hash(password, 10);
     const data = this.usersRepository.create({
       userName,

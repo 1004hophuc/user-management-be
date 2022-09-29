@@ -3,7 +3,7 @@ export enum AccountRoles {
   ADMIN = 'admin',
   ADMIN_COMPANY = 'admin-company',
   MODE = 'mode',
-  USER = 'user',
+  // USER = 'user',
   MKT = 'marketing',
   ACCOUNTANT = 'accountant',
   HR = 'hr',

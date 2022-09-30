@@ -7,7 +7,7 @@ dotenv.config();
 
 @Injectable()
 export class JsonWebTokenStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly usersService: UsersService) {
+  constructor(private usersService: UsersService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -31,7 +31,7 @@ export class JsonWebTokenStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException();
     }
 
-    const user = await this.userService.getByUsername(username);
+    const user = await this.usersService.getByUsername(username);
     if (!user) {
       throw new UnauthorizedException();
     }

@@ -42,8 +42,6 @@ export class UsersService {
       where: { userName },
     });
 
-    console.log('console.log.staff: ', staff);
-
     if (!staff) throw new BadRequestException('Username not found!');
 
     return staff;
